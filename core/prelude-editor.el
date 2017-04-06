@@ -190,7 +190,9 @@ The body of the advice is in BODY."
     (with-current-buffer buffer (if mode (funcall mode)))))
 
 ;; highlight the current line
-(global-hl-line-mode +1)
+;;(global-hl-line-mode +1)
+;; dbrady: NEVER DO THIS
+(global-hl-line-mode -1)
 
 (require 'volatile-highlights)
 (volatile-highlights-mode t)
