@@ -1,0 +1,20 @@
+# Find these in https://github.com/mbadolato/iTerm2-Color-Schemes
+# which is in /devel/iTerm2-Color-Schemes
+
+****  3024 Night
+****  Argonaut - better than Pro; colors are brighter (greens are yellowish, blues lightened), but cursor is red (Why?)
+***** Belafonte Night - Excellent
+***** Birds of Paradise - Excellent; Slightly brighter than Belafonte Night (this is good)
+***** Broadcast
+***** Brogrammer
+****  Chalk
+***** DimmedMonokai - perfect except blue is quite pastel
+***** Galaxy - dark blue bg, other colors pastel but really pop. White looks white
+***   Highway - flawed; purle on dark blue hard to read. Other colors PERFECT
+***** Neutron - Excellent but blues quite desaturated
+***** Obsidian - very readable but lower contrast
+***** Pro - classic full-contrast, pure colors everywhere
+***** Solarized Dark Higher Contrast - YES PLEASE, didn't know this was a thing
+***** Spacedust - can't quite tell apart from Pro
+****  Twilight - surprisingly readable, desaturated and sepia
+****  ZenBurn - good colors but bg is too bright, washes out red letters

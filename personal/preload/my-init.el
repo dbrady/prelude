@@ -85,8 +85,6 @@
           (lambda ()
             (local-set-key (kbd "\C-c M-f") 'auto-fill-mode)))
 
-;; Some modes that should auto-fill by default
-(add-hook 'markdown-mode-hook 'auto-fill-mode)
 (add-hook 'org-mode-hook 'auto-fill-mode)
 
 (global-linum-mode 1)
