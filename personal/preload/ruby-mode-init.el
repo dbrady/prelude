@@ -2,7 +2,8 @@
 
 (add-hook 'ruby-mode-hook
           (lambda ()
-            (local-set-key (kbd "\C-c }") 'ruby-toggle-hash-syntax)))
+            (local-set-key (kbd "\C-c }") 'ruby-toggle-hash-syntax)
+            (local-set-key (kbd "\C-c C-t") 'comment-todo-erest-1895)))
 
 
 ;; simple align-regexp is the same as a complex align-regexp, matching on group

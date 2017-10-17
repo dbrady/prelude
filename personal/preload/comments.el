@@ -123,6 +123,14 @@
   )
 
 ;;----------------------------------------------------------------------
+;; comment-todo-erest-1895
+;; TODO: Make a variable for the issue ticket number?
+(defun comment-todo-erest-1895 ()
+  (interactive)
+  (insert (safe-comment-start) "TODO: EREST-1895 - " (safe-comment-end)))
+
+
+;;----------------------------------------------------------------------
 ;; comment-name-and-date
 ;; Inserts a comment string, login name, date, and a colon.
 ;; Example: // dbrady 2003-04-05:
