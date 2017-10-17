@@ -17,6 +17,11 @@
 ;; (global-set-key (kbd "C-'") 'toggle-quotes)
 (global-set-key (kbd "C-c '") 'toggle-quotes)
 
+;; toggle linum-mode - SUPER hard finding a key prefix that isn't being squatted
+;; by ruby-mode, lisp-mode, or especially org-mode. I hate taking C-x but pretty
+;; much anything in org-mode in C-c is taken.
+(global-set-key (kbd "C-x #") 'linum-mode)
+
 ;; investigate thing-at-point
 (defun what-is-thing-at-point (arg)
   "Examine thing-at-point and display it in the echo area"
