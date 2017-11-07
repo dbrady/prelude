@@ -11,10 +11,9 @@
 (require 'toggle-case)
 
 ;; toggle-quotes installed from melpa. They recommend binding it to C-' but
-;; something in Prelude is keeping that bound by force to self-insert-command,
-;; which normally inserts the typed keystroke, but inserts a ' (without Ctrl)
-;; instead. Binding to C-c ' for now.
-;; (global-set-key (kbd "C-'") 'toggle-quotes)
+;; something in Prelude binds that violently to self-insert-command
+;;
+;; M-x package-install <RET> toggle-quotes <RET>
 (global-set-key (kbd "C-c '") 'toggle-quotes)
 
 ;; toggle linum-mode - SUPER hard finding a key prefix that isn't being squatted
