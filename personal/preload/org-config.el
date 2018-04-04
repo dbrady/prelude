@@ -101,7 +101,7 @@
 
 (defun org-insert-journal-title ()
   (interactive)
-  (replace-first-line-with (format-time-string "* %F %a TODO")))
+  (replace-first-line-with (format-time-string "* %F %a TODO [/]")))
 
 (defun org-save-journal-as-today ()
   (interactive)
