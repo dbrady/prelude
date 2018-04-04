@@ -241,8 +241,9 @@ The body of the advice is in BODY."
 (put 'narrow-to-defun 'disabled nil)
 
 ;; enabled change region case commands
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
+;; fUCK yOU pRELUDE gET oFF mY lAWN
+;; (put 'upcase-region 'disabled nil)
+;; (put 'downcase-region 'disabled nil)
 
 ;; enable erase-buffer command
 (put 'erase-buffer 'disabled nil)
