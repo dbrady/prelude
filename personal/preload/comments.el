@@ -145,7 +145,9 @@
   (interactive)
   (insert (format-time-string "%Y-%m-%d")))
 
-(global-set-key (kbd "\C-c #") 'comment-name-and-date)
+;; dbrady 2018-04-11: Stealing C-c #. I want this binding to replace (selection)
+;; with puts "selection: #{selection}"
+;;(global-set-key (kbd "\C-c #") 'comment-name-and-date)
 (global-set-key (kbd "\C-c @") 'insert-date)
 (global-set-key (kbd "\C-c -") 'insert-comment-bar)
 (global-set-key (kbd "\C-c =") 'insert-comment-bar-major)
