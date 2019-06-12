@@ -241,8 +241,9 @@ The body of the advice is in BODY."
 (put 'narrow-to-defun 'disabled nil)
 
 ;; enabled change region case commands
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
+;; dbrady - SCREW THAT. I've trashed SO MANY DOCUMENTS. UGH.
+(put 'upcase-region 'disabled t)
+(put 'downcase-region 'disabled t)
 
 ;; enable erase-buffer command
 (put 'erase-buffer 'disabled nil)
