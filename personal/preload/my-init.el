@@ -8,6 +8,9 @@
 ;; edit core/prelude-editor.el to fix this if you reinstall prelude!
 (global-hl-line-mode -1)
 
+;; show matching parens all the time
+(show-paren-mode 1)
+
 (require 'toggle-case)
 
 ;; toggle-quotes installed from melpa. They recommend binding it to C-' but
