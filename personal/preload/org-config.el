@@ -8,9 +8,10 @@
 
 
 (setq org-todo-keywords
-       '((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "WAITING(w)" "APPT(a)" "DELEGATED(l)"
-                   "PROJECT(p)" "AGENDA(g)"
-       "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(f)")))
+      '((sequence "TODO(t)"
+                  "|" "BLOCKED(b)"
+                  "|" "DELEGATED(g)" "WAITING(w)"
+                  "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(f)")))
 (setq org-tag-alist '(("@work" . ?w) ("@home" . ?h) ("computer" . ?c)
           ("errands" . ?e) ("costco" . ?t) ("grocery" . ?g)
           ("project" . ?p) ("agenda" . ?a)))
@@ -102,7 +103,8 @@
 (defun org-insert-journal-title ()
   (interactive)
   (beginning-of-buffer)
-  (insert (format-time-string "* %F %a TODO [/]\n")))
+  (insert (format-time-string "* %F %a TODO [/]\nM-x o-i-j RET\n\n"))
+  (previous-line))
 
 (defun org-save-journal-as-today ()
   (interactive)
