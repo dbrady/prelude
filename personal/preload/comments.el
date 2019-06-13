@@ -123,14 +123,6 @@
   )
 
 ;;----------------------------------------------------------------------
-;; comment-todo-erest-1895
-;; TODO: Make a variable for the issue ticket number?
-(defun comment-todo-erest-1895 ()
-  (interactive)
-  (insert (safe-comment-start) "TODO: EREST-1895 - " (safe-comment-end)))
-
-
-;;----------------------------------------------------------------------
 ;; comment-name-and-date
 ;; Inserts a comment string, login name, date, and a colon.
 ;; Example: // dbrady 2003-04-05:
@@ -151,3 +143,19 @@
 (global-set-key (kbd "\C-c @") 'insert-date)
 (global-set-key (kbd "\C-c -") 'insert-comment-bar)
 (global-set-key (kbd "\C-c =") 'insert-comment-bar-major)
+
+;;----------------------------------------------------------------------
+;; comment-todo-story
+;; Inserts a comment string and TODO: <story-name> followed by a hyphen
+;; C-c ! !            => "# TODO: PRO-1322-SPIKE-remove-autostart - "
+;; C-c ! ? <name>     => queries for branch name and saves it to ~/.emacs-todo-story-name
+;; C-u <name> C-c ! ? => sets todo story name name directly
+;;
+;; TODO: Write the second two defuns; right now this changes rarely enoughthat
+;; I can just jam it directly into this source. Stories change daily or it's
+;; maybe once a month that I have a story big enough that I need to start
+;; leaving a trail of breadcrumbs
+(defun comment-todo-story ()
+  (interactive)
+  (insert (safe-comment-start) "TODO: PRO-1322-SPIKE - " (safe-comment-end)))
+(global-set-key (kbd "\C-c ! !") 'comment-todo-story)
