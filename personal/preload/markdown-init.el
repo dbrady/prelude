@@ -14,10 +14,19 @@
 ;;   orgmode. Specifically, it changes |----|-----|-----| in the table headers
 ;;   to |----+----+----|, which breaks markdown rendering. This script should be
 ;;   invoked run any time I invoke my "go to markdown mode from org mode"
-;;   command, and possibly before I save a file in markdown mode.  - [ ]
-;;   ALTERNATELY: org-mode seems to read |----|----|-----| just fine. Any way to
-;;   customize it to WRITE that style, too? Then they'd be implicitly
+;;   command, and possibly before I save a file in markdown mode.
+;;
+;; - [ ] ALTERNATELY: org-mode seems to read |----|----|-----| just fine. Any
+;;   way to customize it to WRITE that style, too? Then they'd be implicitly
 ;;   cooperative.
+;;
+;; - [ ] Honestly the thing I need most right now is the ability to align a
+;;   table the way org-mode does, but without leaving markdown-mode. Doable?
+;;   Ideally without having to select the entire table. If the table is known to
+;;   be marked in advance, then (narrow-to-region) (org-mode 't) (orgtbl-tab)
+;;   (markdown-mode 't) (widen) should just about cover it. Heck, could even put
+;;   that in a macro.
+;;
 ;;
 ;; TODO: Investigate MuMaMo or some other modern feature that might let me edit
 ;; a markdown file but detect tables and automagically invoke org-table-mode
