@@ -7,21 +7,21 @@
 
 (defun textmate-case/camelCase-p (word)
   (let (case-fold-search)
-    (and (not (string-match "_" word))
-         (not (string-match "^[A-Z]" word)))))
+    (and (not (string-match "_" word))            ; contains no underlines, and
+         (not (string-match "^[A-Z]" word)))))    ; begins with lowercase
 
-(defun textmate-case/snake_case-p (word)
+(defun textmate-case/snake_case-p (word)          ; contains underlines
   (string-match "_" word))
 
 (defun textmate-case/PascalCase-p (word)
   (let (case-fold-search)
-    (and (not (string-match "_" word))
-         (string-match "^[A-Z]" word))))
+    (and (not (string-match "_" word))   ; contains no underlines, and
+         (string-match "^[A-Z]" word)))) ; begins with uppercase
 
 (defun textmate-case/word-pieces (word)
   "returns a list of the pieces of a word, separated by snake-case or camel-case boundaries"
   (with-temp-buffer
-    (insert-string word)
+    (insert word)
     (goto-char 0)
     (let (case-fold-search
           (pieces '())
@@ -61,7 +61,7 @@
   (interactive "p")
   (let* ((bounds (bounds-of-thing-at-point 'symbol))
          (word   (filter-buffer-substring (car bounds) (cdr bounds) t))
-         (target-case-format (cond ((textmate-case/snake_case-p word) 'camelCase)
+         (target-case-format (cond ((textmate-case/snake_case-p word) 'camellCase)
                                    ((textmate-case/camelCase-p word)  'PascalCase)
                                    ((textmate-case/PascalCase-p word) 'snake_case))))
     (insert
@@ -74,18 +74,30 @@
   (interactive "p")
   (let* ((bounds (bounds-of-thing-at-point 'symbol))
          (word   (filter-buffer-substring (car bounds) (cdr bounds) t))
-         (target-case-format (cond ((textmate-case/snake_case-p word) 'camelCase)
-                                   ((textmate-case/camelCase-p word)  'snake_case))))
+         (target-case-format (cond ((textmate-case/snake_case-p word) 'PascalCase)
+                                   ((textmate-case/camelCase-p word)  'PascalCase)
+                                   ((textmate-case/PascalCase-p word)  'snake_case))))
     (insert
-     (textmate-case/convert-case target-case-format
+     (textmate-case/convert-case Target-case-format
                                  word)))
   (if (or (= arg -1) (= arg 2)) (textmate-case/toggle 1)))
 
-(global-set-key (kbd "C-c t _") 'textmate-case/toggle)
-(global-set-key (kbd "C-c t -") 'textmate-case/toggle)
-(global-set-key (kbd "s-_") 'textmate-case/toggle)
+;; (global-set-key (kbd "C-c t _") 'textmate-case/toggle)
+;; (global-set-key (kbd "C-c t -") 'textmate-case/toggle)
+;; (global-set-key (kbd "s-_") 'textmate-case/toggle)
 
+;; Dear Future Dave: Are you debugging the toggle key not going where it should?
+;; I just discovered a fun OSX fact: "CTRL_DOWN c - CTRL_UP" registers as C-c
+;; C-_, not C-c C--.  Have fun with that. Love, Past Dave
+;;
+;; I need to find better keybinds. For now, this deactivates the 3-way toggle
+;; and ONLY uses the ruby-friendly version. Historically this has guaranteed me
+;; getting forced back into javascript work within the week. Here's hoping
+;; calling the "washing the car doesn't make it rain" prevents my washing the
+;; car from making it rain...
+;;
+;; TODO: Find a new keybind for toggle. Or maybe detect C-u prefix?
 (global-set-key (kbd "\C-c C-_") 'textmate-case/toggle2)
-(global-set-key (kbd "\C-c C--") 'textmate-case/toggle)
+(global-set-key (kbd "\C-c C--") 'textmate-case/toggle) ;; find me a new keybind!
 
 (provide 'toggle-case)
