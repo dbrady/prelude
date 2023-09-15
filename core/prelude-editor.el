@@ -207,8 +207,9 @@
 (put 'narrow-to-defun 'disabled nil)
 
 ;; enabled change region case commands
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
+;; 2023-09-16 dbrady: NO. This has wrecked so much source code. If I want it, I'll run it with M-x
+(put 'upcase-region 'disabled t)
+(put 'downcase-region 'disabled t)
 
 ;; enable erase-buffer command
 (put 'erase-buffer 'disabled nil)
