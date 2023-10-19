@@ -25,14 +25,15 @@
 ;; toggle linum-mode - SUPER hard finding a key prefix that isn't being squatted
 ;; by ruby-mode, lisp-mode, or especially org-mode. I hate taking C-x but pretty
 ;; much anything in org-mode in C-c is taken.
-(global-set-key (kbd "C-x #") 'linum-mode)
+;;(global-set-key (kbd "C-x #") 'nlinum-mode)
+(global-set-key (kbd "C-x #") 'global-display-line-numbers-mode)
 
 ;; investigate thing-at-point
 (defun what-is-thing-at-point (arg)
   "Examine thing-at-point and display it in the echo area"
   (interactive "p")
   (let* ((bounds (bounds-of-thing-at-point 'symbol))
-	 (word   (buffer-substring (car bounds) (cdr bounds))))
+         (word   (buffer-substring (car bounds) (cdr bounds))))
     (message "Thing at point is: %s" word)))
 
 (global-set-key (kbd "C-c ?") 'what-is-thing-at-point)
@@ -92,15 +93,22 @@
 
 ;; org-mode likes to override this. Let's fix that.
 (add-hook 'org-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "\C-c M-f") 'auto-fill-mode)))
+          (lambda ()
+            (local-set-key (kbd "\C-c M-f") 'auto-fill-mode)))
 
 (add-hook 'org-mode-hook 'auto-fill-mode)
 
 ;; 2022-04-28 Emacs 28 appears to have a new linum mode of its own,
 ;; and prelude mucks with it, but it's better than prelude's.
 ;;
-;; 2023-09-15 Emacs 29 appears to have removed it. Sort out your life man
+;; 2023-09-15 Emacs 29 appears to have changed it to nlinum-mode, and it's
+;; automagically enabled in core/prelude-ui.el. If you toggle it, it will turn
+;; on TWO sets of line numbers, because the line numbers you're seeing normally
+;; are coming from global-display-line-numbers-mode.
+;;
+;; Sort out your life man. How dare you break my stuff on a major version
+;; update. It's just RUDE.
+;;
 ;; (global-linum-mode 1)
 
 (global-set-key (kbd "\C-x C-r") 'recentf-open-files)

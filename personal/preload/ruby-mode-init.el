@@ -29,8 +29,17 @@
 ;; Okay, you can do proper json-style alignment (adding spaces AFTER the colon)
 ;; with this command:
 ;; C-u M-x align-regexp <RET> \(\s-*\):\(\s-*\) <RET> <BKSP> 2 <RET> <RET>
-(fset 'align-json-hash
-      (lambda (&optional arg) "Keyboard macro." (interactive "p")
-        (kmacro-exec-ring-item (quote
-                                ("xalign-regexp:\\(\\s-*\\)2y" 0 "%d")) arg)))
+(defun align-json-hash ()
+  (interactive "r")
+  "Align keys and values in a JSON hash in the region from BEGIN to END."
+  (save-excursion
+    (narrow-to-region begin end)
+    (goto-char (point-min))
+    (while (re-search-forward "[:,]" nil t)
+      (when (re-search-forward "\\S-" (line-end-position) t)
+        (backward-char)
+        (insert " ")
+        (forward-char))))
+  (widen))
+
 (global-set-key (kbd "\C-x :") 'align-json-hash)

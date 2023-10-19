@@ -3,6 +3,11 @@
 ;; force-upgrade to a major emacs version. It is now 2022, 2 jobs
 ;; later, and I just got accidentally upgraded to Emacs 28.
 ;;
+;; 2023-09-21: And now Emacs 29. It's not that I never clean things up. It's
+;; that there is value in not maintaining something that isn't broken. If I only
+;; ever have to hack on this file once every six years, not refactoring this
+;; file is pure "opportunity value".
+;;
 ;; TODO: Sort these out, move them into the proper init files and kill
 ;; this file.
 
