@@ -28,12 +28,18 @@
 ;;(global-set-key (kbd "C-x #") 'nlinum-mode)
 (global-set-key (kbd "C-x #") 'global-display-line-numbers-mode)
 
+;; TODO: bash-colorize-line snippet? (Should I look into a snippet mode tool again?)
+;; TODO: look at interactive "r" and navigating the region
+;; TODO: it should insert \033[36m at start of region, \033[0m at the end
+;; TODO: if there's an echo " or echo ' at BOL, insert -e
+;; TODO: check for C-u invocation, if present assume we want to COPY the current line, paste it twice, and wrap the first line in echo -e "<color_on>\1<color_off>"
+
 ;; investigate thing-at-point
 (defun what-is-thing-at-point (arg)
   "Examine thing-at-point and display it in the echo area"
   (interactive "p")
   (let* ((bounds (bounds-of-thing-at-point 'symbol))
-         (word   (buffer-substring (car bounds) (cdr bounds))))
+	 (word   (buffer-substring (car bounds) (cdr bounds))))
     (message "Thing at point is: %s" word)))
 
 (global-set-key (kbd "C-c ?") 'what-is-thing-at-point)
@@ -93,8 +99,8 @@
 
 ;; org-mode likes to override this. Let's fix that.
 (add-hook 'org-mode-hook
-          (lambda ()
-            (local-set-key (kbd "\C-c M-f") 'auto-fill-mode)))
+	  (lambda ()
+	    (local-set-key (kbd "\C-c M-f") 'auto-fill-mode)))
 
 (add-hook 'org-mode-hook 'auto-fill-mode)
 

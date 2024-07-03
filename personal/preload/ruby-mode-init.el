@@ -12,7 +12,7 @@
   ;; TODO: Reload and/or force ruby-mode?
   (save-excursion t
                   (beginning-of-buffer)
-                  (insert-file "~/devel/scrapbin/ruby/new-ruby")
+                  (insert-file "~/bin/new-ruby")
                   (ruby-mode)))
 
 (add-hook 'ruby-mode-hook
