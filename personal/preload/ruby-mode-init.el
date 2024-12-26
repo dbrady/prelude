@@ -43,3 +43,27 @@
   (widen))
 
 (global-set-key (kbd "\C-x :") 'align-json-hash)
+
+;; rubocop stuff
+;; C-c C-x C-r - rubocop
+;;
+
+;; C-c C-x C-r m a - Metrics/AbcSize
+(defun rubocop-disable-metrics-abcsize ()
+  (interactive)
+  "Disable Metrics/AbcSize cop around the current function"
+  (save-excursion
+    (ruby-end-of-block) ;; go to end and back up to ensure correct positioning
+    (ruby-beginning-of-block)
+    (insert "# rubocop:disable Metrics/AbcSize\n")
+    ;; (ruby-indent-line) ; Y U NO IDNAT
+    ;; (insert "PANTS")
+
+    ;; go to end, append the re-enable
+    ;; (ruby-end-of-block)
+    ;; (move-end-of-line)
+    ;; (newline)
+    ;; (indent-for-tab-column)
+    ;; (insert "# rubocop:enable Metrics/AbcSize")
+    )
+  )
