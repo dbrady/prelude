@@ -8,12 +8,21 @@
 (defun insert-ruby-new-script-boilerplate ()
   (interactive)
   "Insert my new-ruby script boilerplate"
-  ;; TODO: Replace scriptname with buffer-name?
-  ;; TODO: Reload and/or force ruby-mode?
-  (save-excursion t
-                  (beginning-of-buffer)
-                  (insert-file "~/bin/new-ruby")
-                  (ruby-mode)))
+  (let* (
+         (script-name (file-name-nondirectory (buffer-file-name)))
+         (command (format "cat ~/bin/new-ruby | sed -e 's/{{SCRIPT}}/%s/g' | sed -e 's/{{DEL}}//g'" script-name))
+         (output (shell-command-to-string command)))
+    (save-excursion
+      (goto-char (point-min))
+      (insert output)
+      (ruby-mode))))
+;; (defun insert-ruby-new-script-boilerplate ()
+;;   (interactive)
+;;   "Insert my new-ruby script boilerplate"
+;;   (save-excursion t
+;;                   (beginning-of-buffer)
+;;                   (insert-file "~/bin/new-ruby")
+;;                   (ruby-mode)))
 
 (add-hook 'ruby-mode-hook
           (lambda ()
@@ -22,8 +31,6 @@
             (local-set-key (kbd "\C-c #") 'puts-selection-as-interpolation)
             (fci-mode 't)
             ))
-
-
 
 ;; align-json-hash
 ;; Okay, you can do proper json-style alignment (adding spaces AFTER the colon)
