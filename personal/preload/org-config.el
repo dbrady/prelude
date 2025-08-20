@@ -40,46 +40,6 @@
          (org-beginning-of-item)
          (when (org-at-item-checkbox-p)
            (ad-set-args 0 '(checkbox)))))))
-;; ----------------------------------------------------------------------
-
-;; ----------------------------------------------------------------------
-;; org-ctrl-c-ctrl-c-and-next-line
-;;
-;; TODO: next-line until org-at-item-p would be great, it would move
-;; me to the next checkbox---UNLESS there are no more items. But how
-;; do I tell? ALSO, don't stop on a checkbox if it has children--move
-;; to the first childless descendant, that way I can keep checking
-;; things off as I go down.
-;;
-;; NOTE: PDI: When I wrote org-uncheck-everything, I got around all
-;; this semantic mess by going to the END of the document and working
-;; up. This has the obvious drawback of working only in documents that
-;; have exactly one checklist (or this is a feature where "everything"
-;; means "EVERYTHING"). However, I recently dug into the org-mode
-;; source code and found org-at-item-p, which makes me wonder if there
-;; aren't methods like org-item-has-children-p or something
-;; similar--I.e. how does org-mode *itself* know there are children,
-;; and when it has reached the end of a checklist and should stop
-;; counting? TODO: research and interface with this API.
-;;
-;; TODO: have this work like kmacro-end-and-call-macro, where you hit
-;; C-x e to execute the macro, then the minibuffer says "Hit e to
-;; execute again". So I'd hit say C-x c, but could then just hit c c c
-;; c to continue checking items off. Also C-u n prefix would be nice,
-;; and C-x 0 would essentially be "check everything off until end of
-;; document". Care would have to be taken to skip over items that have
-;; children. See previous note about org-mode API research; ideally
-;; the C-u 0 version should stop at the end of the current checklist
-;; if there is more than one checklist in the document.
-; ----------------------------------------------------------------------
-(defun org-ctrl-c-ctrl-c-and-next-line ()
-  (interactive)
-  (when (org-at-item-p)
-    (org-ctrl-c-ctrl-c)
-    (next-line)))
-
-(add-hook 'org-mode-hook
-          (lambda () (local-set-key (kbd "C-x c") #'org-ctrl-c-ctrl-c-and-next-line)))
 
 ;; ----------------------------------------------------------------------
 ;; KWM: org-insert-journal-title
@@ -103,7 +63,7 @@
 (defun org-insert-journal-title ()
   (interactive)
   (beginning-of-buffer)
-  (insert (format-time-string "* %F %a TODO [/]\nM-x o-i-j RET\n\n"))
+  (insert (format-time-string "* %F %a TODO [/]\nM-x oij RET\n\n"))
   (previous-line))
 
 (defun oij ()
@@ -136,24 +96,39 @@
   (write-file (format-time-string "%F-todo.org")))
 
 ;; ----------------------------------------------------------------------
-;; KWM: org-uncheck-everything
+;; org-uncheck-region-or-section
 ;;
-;; Note that direction matters: org-ctrl-c-ctrl-c will raise an error
-;; (and exit the while loop and the defun) if you try to uncheck an
-;; item that has checked subitems. When doing this manually I either
-;; ignore these errors (the defun could do this by catching the error)
-;; or I check the next line for subitems (the defun could do this by
-;; scanning ahead). However, by walking backwards up the document from
-;; the bottom, all of this can be avoided, since we now uncheck all
-;; child items before reaching the parent item.
+;; Unchecks items in an org tree checkbox task list. If no region is selected,
+;; operates on the section under the current heading.
+;;
+;; vibecoded with Claude 4 Sonnet.
 ;; ----------------------------------------------------------------------
-(defun org-uncheck-everything ()
+(defun org-uncheck-region-or-section ()
+  "Uncheck all checkboxes in region (if active) or current top-level section.
+Works backwards to avoid parent/child dependency issues."
   (interactive)
-  (save-excursion
-    (end-of-buffer)
-    (while (search-forward "[X]" nil t -1)
-      (move-end-of-line 1)
-      (org-ctrl-c-ctrl-c))))
-
+  (let ((start-pos (if (use-region-p)
+                       (region-beginning)
+                     (save-excursion
+                       (org-back-to-heading t)
+                       (point))))
+        (end-pos (if (use-region-p)
+                     (region-end)
+                   (save-excursion
+                     (org-back-to-heading t)
+                     (org-end-of-subtree t t)
+                     (point))))
+        (items-to-uncheck '()))
+    ;; First pass: collect all checked items (working backwards for parent/child safety)
+    (save-excursion
+      (goto-char end-pos)
+      (while (re-search-backward "^\\s-*\\([-+*]\\|[0-9]+[.)]\\)\\s-+\\[X\\]" start-pos t)
+        (when (org-at-item-checkbox-p)
+          (push (point) items-to-uncheck))))
+    ;; Second pass: uncheck all collected items
+    (dolist (pos items-to-uncheck)
+      (save-excursion
+        (goto-char pos)
+        (org-toggle-checkbox)))))
 
 (provide 'org-config)
