@@ -115,6 +115,20 @@
 ;; Add sorting to C-x <down> and C-x <up>
 (global-set-key (kbd "\C-x <down>") 'sort-lines)
 
+;; Sort words on a line
+(defun sort-words-in-region (beg end)
+  "Sort comma-separated symbols in the region alphabetically.
+Keeps a single space after each comma."
+  (interactive "r")
+  (let* ((text (buffer-substring-no-properties beg end))
+         (items (split-string text "," t "[ \t\n]+"))
+         (sorted (sort items #'string<))
+         (joined (mapconcat #'string-trim sorted ", ")))
+    (delete-region beg end)
+    (insert joined)))
+;; Add sorting words to C-x C-S-<down>
+(global-set-key (kbd "\C-x C-S-<down>") 'sort-words-in-region)
+
 
 ;; Disable guru-mode, that's the thing that bitches when you use
 ;; non-idiomatic keybindings. I am fluent in the idiomatic
