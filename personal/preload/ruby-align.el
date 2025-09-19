@@ -8,7 +8,7 @@
 ;;   attr_accessor :page, :pants, :face, :quick, :foo, :bar, :baz, :cheese,
 ;;     :qux, :quux
 ;;
-;; The regioun would be changed to:
+;; The region would be changed to:
 ;;
 ;;   attr_accessor :bar, :baz, :cheese, :face, :foo, :page, :pants, :quick,
 ;;     :quux, :qux
@@ -141,5 +141,19 @@
 ;; (add-to-list 'align-open-comment-modes 'ruby-mode)
 ;; (dolist (it ruby-align-rules-list)
 ;;   (add-to-list 'align-rules-list it))
+
+
+;; Unbind C-x C-i from indent-rigidly and bind to ruby indentation toggle
+(global-unset-key (kbd "C-x C-i"))
+
+(defun toggle-ruby-indentation-style ()
+  "Toggle between Oklahoma style (deep indentation) and K&R style for Ruby."
+  (interactive)
+  (setq ruby-align-to-stmt-keywords (not ruby-align-to-stmt-keywords))
+  (message "Ruby indentation style: %s"
+           (if ruby-align-to-stmt-keywords "K&R" "Oklahoma")))
+
+(global-set-key (kbd "C-x C-i") 'toggle-ruby-indentation-style)
+
 
 (provide 'ruby-align)
