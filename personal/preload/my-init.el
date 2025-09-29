@@ -129,7 +129,6 @@ Keeps a single space after each comma."
 ;; Add sorting words to C-x C-S-<down>
 (global-set-key (kbd "\C-x C-S-<down>") 'sort-words-in-region)
 
-
 ;; Disable guru-mode, that's the thing that bitches when you use
 ;; non-idiomatic keybindings. I am fluent in the idiomatic
 ;; keybindings, so when I don't use them I have a reason. When I want

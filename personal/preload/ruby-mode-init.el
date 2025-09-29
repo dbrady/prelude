@@ -1,8 +1,7 @@
 ;; M-x package-install <RET> ruby-hash-syntax <RET>
-
-;; pants => puts "pants: #{pants}"
-(fset 'puts-selection-as-interpolation
-      (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("puts \": #{}\"" 0 "%d")) arg)))
+;;
+;; NOTE: I am trying to move all the ruby-editing commands to the prefix C-c C-r
+;; which is currently unused on my installation, e.g. C-c C-r i for
 
 (defun insert-ruby-new-script-boilerplate ()
   (interactive)
@@ -30,5 +29,26 @@
 (fset 'align-json-hash
       (lambda (&optional arg) "Keyboard macro." (interactive "p")
         (kmacro-exec-ring-item (quote
-                                ("xalign-regexp:\\(\\s-*\\)2y" 0 "%d")) arg)))
+                                ("xalign-regexp:\\(\\s-*\\)2y" 0 "%d")) arg)))
 (global-set-key (kbd "\C-x :") 'align-json-hash)
+
+(defun ruby-wrap-current-line-in-puts-inspect ()
+  "Replace the expression on the current line with a puts inspect statement.
+Example: '   do_thing(x)' becomes '    puts \"do_thing(x): #{do_thing(x).inspect}\"'
+Example: '   do_thing x'  becomes '    puts \"do_thing x: #{(do_thing x).inspect}\"'"
+  (interactive)
+  (let* ((line-start (line-beginning-position))
+         (line-end (line-end-position))
+         (line-text (buffer-substring-no-properties line-start line-end))
+         (indentation (save-excursion
+                        (goto-char line-start)
+                        (skip-chars-forward " \t")
+                        (- (point) line-start)))
+         (indent-str (make-string indentation ?\s))
+         (expr (string-trim (substring line-text indentation)))
+         (has-spaces (string-match-p " " expr))
+         (wrapped-expr (if has-spaces (format "(%s)" expr) expr)))
+    (delete-region line-start line-end)
+    (insert (format "%sputs \"%s: #{%s.inspect}\"" indent-str expr wrapped-expr))))
+
+(global-set-key (kbd "\C-c C-r i") 'ruby-wrap-current-line-in-puts-inspect)
