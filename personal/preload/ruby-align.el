@@ -1,44 +1,8 @@
 ;; ruby-align.el - ruby-mode alignment tools-helps
 
-(defun sort-constants ()
-  (interactive)
-    (beginning-of-line)
-    (re-search-forward ":" nil t)
-    (backward-char)
-    (set-mark (point))
-    (re-search-forward "^[[:space:]]*$" nil t)
-    (narrow-to-region (mark) (point))
-
-    ;; strip commas
-    (beginning-of-buffer)
-    (while (search-forward "," nil t)
-      (replace-match "\n"))
-    ;; This would be better if it actually worked (I HAVE NO IDEA WHAT I AM DOING):
-    ;; (perform-replace "," "\n" nil t nil nil (beginning-of-buffer) (end-of-buffer))
-
-    ;; remove double newlines
-    (beginning-of-buffer)
-    (while (search-forward "\n\n" nil t)
-      (replace-match "\n"))
-
-    ;; strip leading space on each line
-    (beginning-of-buffer)
-    (while (re-search-forward "^[[:space:]]+" nil t)
-      (replace-match ""))
-
-    ;; add commas back in to every line except last
-    (beginning-of-buffer)
-    (while (re-search-forward "$" nil t)
-      (replace-match ",")
-      (forward-char))
-    (sort-lines nil (mark) (point))
-    ;; (pop-mark)
-    ;; (end-of-buffer)
-    ;; (set-mark (point))
-    ;; (re-search-backward "[[:alnum:]]," nil t)
-    )
-
-
+;; -----------------------------------------------------------------------------
+;; toggle-ruby-indentation-style
+;;
 ;; I like Oklahoma style, my team demands K&R
 (defun toggle-ruby-indentation-style ()
   "Toggle between Oklahoma style (deep indentation) and K&R style for Ruby."
@@ -50,6 +14,7 @@
 (global-unset-key (kbd "C-x C-i")) ;; Unbind indent-rigidly
 (global-set-key (kbd "C-x C-i") 'toggle-ruby-indentation-style)
 
+;; -----------------------------------------------------------------------------
 ;; default ruby-align-regexp will insert spaces BEFORE the match. Here's a
 ;; custom defun that inserts spaces AFTER it. Vibecoded with Claude Sonnet 4 on
 ;; 2025-09-19.
