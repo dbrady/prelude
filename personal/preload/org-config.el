@@ -63,7 +63,31 @@
 (defun org-insert-journal-title ()
   (interactive)
   (beginning-of-buffer)
-  (insert (format-time-string "* %F %a TODO [/]\nM-x oij RET\n\n"))
+  (insert (format-time-string "* %F %a TODO [/]\n"))
+  ;; ideally, have a daily template down at the bottom
+  ;; search document for * DAILY TEMPLATE, if found, copy that section
+  ;; then go back to top, see if it starts with "This Week", if so skip that section
+  ;; past the daily template at the top. Yay.
+  (insert "
+M-x oij RET
+
+|----+------+-----+-------|
+| Hr | Plan | Log | Notes |
+|----+------+-----+-------|
+| TD |      |     |       |
+|----+------+-----+-------|
+|  8 |      |     |       |
+|  9 |      |     |       |
+| 10 |      |     |       |
+| 11 |      |     |       |
+| 12 |      |     |       |
+|  1 |      |     |       |
+|  2 |      |     |       |
+|  3 |      |     |       |
+|  4 |      |     |       |
+|----+------+-----+-------|
+
+")
   (previous-line))
 
 (defun oij ()
