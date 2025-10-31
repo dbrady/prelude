@@ -126,6 +126,44 @@ M-x oij RET
 ;; operates on the section under the current heading.
 ;;
 ;; vibecoded with Claude 4 Sonnet.
+;;
+;; BUG: Here's an interesting list:
+;; - [-] Plan
+;;   - [X] Comb through this list
+;;   - [X] JIRA
+;;     - [X] Clear Reviews
+;;     - [X] Check board
+;;   - [-] Scoreboard
+;;     - [X] Existing
+;;     - [ ] How would YOU score it, Clod?
+;;     - [ ] Score tracking
+;;     - [ ] Travis' Kanban board
+;; - [X] Acumen
+;; - [X] COR-3665 / COR-4194 - Shipt
+;;   - [X] Check on Slack convo, users are ready for this interface contract
+;;   - [X] Syed is questioning the controctt - check w/him
+;; - [X] COR-4194 - Prefactorings
+;;   - [X] Alphabetize/condense the where clause
+;;   - [X] Superclass for Condition Satifiers
+;;     - [X] Includes the monads
+;;     - [X] Includes the includes
+;; - [X] COR-4286: Ramses integration ticket (Abandoned)
+;;   - [X] What was the new ticket Ramses assigned? Answer: COR-4334
+;;   - [X] Link/abandon this ticket, merge/claim that one?
+;;   - [X] Update Slork correctly?
+;; - [X] EOD
+;;   - [X] Slorks
+;;   - [X] Daily time/goal/journal
+;;   - [X] Clear all pending reviews
+;;
+;; If you select the whole section top-to-bottom (set mark at - [-] Plan and
+;; select downward), this defun works. If you select bottom-to-top or just leave
+;; the point in the block and let it find the selection itself, it SKIPS a
+;; handful of entries. Also, if you do it JUST right, it will actually CHECK all
+;; the boxes.
+;;
+;; Until I can vibedebug this, workaround 1: always select the region, and
+;; always select top-to-bottom, or 2: run it twice, the second run clears it up.
 ;; ----------------------------------------------------------------------
 (defun org-uncheck-region-or-section ()
   "Uncheck all checkboxes in region (if active) or current top-level section.
