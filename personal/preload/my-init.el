@@ -142,3 +142,8 @@ Keeps a single space after each comma."
 
 ;; This isn't getting picked up from data-team-init.el
 (setq js-indent-level 4)
+
+;; I fat-finger C-x C-l all the time, trashing my capitalization in code. I
+;; never EVER want to downcase-region. If that ever changes, I will be delighted
+;; to type M-x downcase-region, and if THAT ever changes, we can remove this.
+(global-unset-key (kbd "C-x C-l"))
