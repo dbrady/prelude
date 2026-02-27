@@ -1,5 +1,15 @@
 ;; ruby-align.el - ruby-mode alignment tools-helps
 
+;; Default to K&R style (team standard). Toggle with C-x C-i.
+;; Emacs 30 SMIE-based ruby-mode has separate knobs for each construct:
+;;   ruby-align-to-stmt-keywords  - if/unless/begin/case/def alignment
+;;   ruby-method-call-indent      - method chain continuation (.foo\n.bar)
+;;   ruby-after-operator-indent   - binary operator continuation (x ||\n y)
+;; The old ruby-deep-indent-paren only works when ruby-use-smie is nil.
+(setq ruby-align-to-stmt-keywords t)
+(setq ruby-method-call-indent nil)
+(setq ruby-after-operator-indent nil)
+
 ;; -----------------------------------------------------------------------------
 ;; toggle-ruby-indentation-style
 ;;
@@ -7,9 +17,11 @@
 (defun toggle-ruby-indentation-style ()
   "Toggle between Oklahoma style (deep indentation) and K&R style for Ruby."
   (interactive)
-  (setq ruby-align-to-stmt-keywords (not ruby-align-to-stmt-keywords))
-  (message "Ruby indentation style: %s"
-           (if ruby-align-to-stmt-keywords "K&R" "Oklahoma")))
+  (let ((to-knr (not ruby-align-to-stmt-keywords)))
+    (setq ruby-align-to-stmt-keywords to-knr)
+    (setq ruby-method-call-indent (not to-knr))
+    (setq ruby-after-operator-indent (not to-knr))
+    (message "Ruby indentation style: %s" (if to-knr "K&R" "Oklahoma"))))
 
 (global-unset-key (kbd "C-x C-i")) ;; Unbind indent-rigidly
 (global-set-key (kbd "C-x C-i") 'toggle-ruby-indentation-style)
