@@ -6,7 +6,7 @@
 ;; Color theme crap
 (setq monokai-user-variable-pitch t)
 ;; edit core/prelude-editor.el to fix this if you reinstall prelude!
-(global-hl-line-mode -1)
+;;(global-hl-line-mode -1) -- emacs 3.0 uses display-line-numbers-mode
 
 ;; Always follow symlinks to source-controlled file
 (setq vc-follow-symlinks t)
@@ -25,7 +25,8 @@
 ;; toggle linum-mode - SUPER hard finding a key prefix that isn't being squatted
 ;; by ruby-mode, lisp-mode, or especially org-mode. I hate taking C-x but pretty
 ;; much anything in org-mode in C-c is taken.
-(global-set-key (kbd "C-x #") 'linum-mode)
+;; (global-set-key (kbd "C-x #") 'linum-mode)
+(global-set-key (kbd "C-x #") 'display-line-numbers-mode)
 
 ;; investigate thing-at-point
 (defun what-is-thing-at-point (arg)
@@ -141,7 +142,7 @@ Keeps a single space after each comma."
 (setq vc-follow-symlinks t)
 
 ;; This isn't getting picked up from data-team-init.el
-(setq js-indent-level 4)
+;;(setq js-indent-level 2)
 
 ;; I fat-finger C-x C-l all the time, trashing my capitalization in code. I
 ;; never EVER want to downcase-region. If that ever changes, I will be delighted
