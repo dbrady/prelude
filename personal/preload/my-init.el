@@ -148,3 +148,7 @@ Keeps a single space after each comma."
 ;; never EVER want to downcase-region. If that ever changes, I will be delighted
 ;; to type M-x downcase-region, and if THAT ever changes, we can remove this.
 (global-unset-key (kbd "C-x C-l"))
+
+
+;; load my bash ANSI colorizing hack crap. M-x bash-color-<TAB> for ANSI color goodness.
+(require 'ansi-colors)

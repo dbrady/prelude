@@ -14,7 +14,8 @@
 ;; toggle-ruby-indentation-style
 ;;
 ;; I like Oklahoma style, my team demands K&R
-(defun toggle-ruby-indentation-style ()
+;; put OK and KR in defun name so I can C-h a oklahoma
+(defun toggle-ruby-indentation-style-okhlahoma-or-kandr ()
   "Toggle between Oklahoma style (deep indentation) and K&R style for Ruby."
   (interactive)
   (let ((to-knr (not ruby-align-to-stmt-keywords)))
